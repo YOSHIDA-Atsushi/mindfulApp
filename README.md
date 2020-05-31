@@ -16,6 +16,8 @@
 react-nativeをinitialize。visual studio codeでeslint, prettier導入。initial commit。
 
 ### 5/31
-書籍「React Native 〜 JavaScriptによるiOS/Androidアプリの開発の実践」で4章「React Nativeの基本」を理解。   
+- 書籍「React Native 〜 JavaScriptによるiOS/Androidアプリの開発の実践」で4章「React Nativeの基本」を理解。  
+- develop branch, feature/tab branch作成。 
+- createBottomTabNavigatorとFlatListとSafeAreaViewを導入。  
 
 ### 6/1
