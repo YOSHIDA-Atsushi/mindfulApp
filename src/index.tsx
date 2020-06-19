@@ -1,15 +1,14 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
 const soundData = [
-  { id: 'first', title: '一番目' },
-  { id: 'second', title: '二番目' },
-  { id: 'third', title: '三番目' },
-  { id: 'forth', title: '四番目' },
-  { id: 'fifth', title: '五番目' },
+  { id: 'first', title: 'mindfulness 1' },
+  { id: 'second', title: 'mindfulness 2' },
+  { id: 'third', title: 'mindfulness 3' },
 ];
 
 const styles = StyleSheet.create({
@@ -23,20 +22,46 @@ const styles = StyleSheet.create({
   },
 });
 
+function Player() {
+  return (
+    <View style={styles.container}>
+      <Text>Player</Text>
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
+function StackNavigator() {
+  return (
+    <Stack.Navigator mode="modal">
+      <Stack.Screen name="Home" component={TabNavigator} />
+      <Stack.Screen name="player" component={Player} />
+    </Stack.Navigator>
+  );
+}
+
 const Layout = (props: any) => <SafeAreaView>{props.children}</SafeAreaView>;
 
 function Main() {
+  const { navigate } = useNavigation();
   return (
     <Layout>
-      <FlatList data={soundData} renderItem={({ item }) => <Text style={styles.label}>{item.title}</Text>} />
+      <FlatList
+        data={soundData}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity key={index.toString()} onPress={() => navigate('player')}>
+            <Text style={styles.label}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </Layout>
   );
 }
 
-function Sub() {
+function QA() {
   return (
     <View style={styles.container}>
-      <Text>Sub</Text>
+      <Text>Q&A</Text>
     </View>
   );
 }
@@ -53,8 +78,8 @@ const Tab = createBottomTabNavigator();
 function TabNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="音声一覧" component={Main} />
-      <Tab.Screen name="☆" component={Sub} />
+      <Tab.Screen name="Home" component={Main} />
+      <Tab.Screen name="Q&A" component={QA} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
@@ -63,7 +88,7 @@ function TabNavigator() {
 export default function () {
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <StackNavigator />
     </NavigationContainer>
   );
 }
