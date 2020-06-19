@@ -23,16 +23,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const Layout = (props: any) => <SafeAreaView>{props.children}</SafeAreaView>;
+
 function Main() {
   return (
-    <FlatList
-      data={soundData}
-      renderItem={({ item }) => (
-        <SafeAreaView>
-          <Text style={styles.label}>{item.title}</Text>
-        </SafeAreaView>
-      )}
-    />
+    <Layout>
+      <FlatList data={soundData} renderItem={({ item }) => <Text style={styles.label}>{item.title}</Text>} />
+    </Layout>
   );
 }
 
